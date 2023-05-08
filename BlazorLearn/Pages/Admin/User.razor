@@ -2,7 +2,7 @@
 @using BlazorLearn.Entity
 @using Furion.DataEncryption
 
-<Table TItem="UserEntity" IsBordered="true" ShowAddButton="true" ShowToolbar="true"
+<BootstrapBlazor.Components.Table TItem="UserEntity" IsBordered="true" ShowAddButton="true" ShowToolbar="true"
        ShowExtendButtons="true" ShowEditButtonCallback="entity => entity.Id != 1" ShowDeleteButtonCallback="entity => entity.Id != 1"
        OnQueryAsync="OnQueryAsync" OnSaveAsync="OnSaveAsync">
     <TableColumns>
@@ -11,26 +11,26 @@
         <TableColumn @bind-Field="@context.RoleId" Lookup="Roles"></TableColumn>
     </TableColumns>
     <RowButtonTemplate>
-        <TableCellButton Color="Color.Success" Icon="fa fa-edit" Text="重置密码" OnClickWithoutRender="() => ShowModal(context)"></TableCellButton>
+        <TableCellButton Color="BootstrapBlazor.Components.Color.Success" Icon="fa fa-edit" Text="重置密码" OnClickWithoutRender="() => ShowModal(context)"></TableCellButton>
     </RowButtonTemplate>
-</Table>
+</BootstrapBlazor.Components.Table>
 
-<Modal @ref="PasswordModal">
+<BootstrapBlazor.Components.Modal @ref="PasswordModal">
     <ModalDialog Title="重置密码">
         <BodyTemplate>
             <BootstrapInput @bind-Value="SelectedUser.Password" DisplayText="请输入新密码"></BootstrapInput>
         </BodyTemplate>
         <FooterTemplate>
-            <Button OnClick="ResetPassword">重置密码</Button>
+            <BootstrapBlazor.Components.Button OnClick="ResetPassword">重置密码</BootstrapBlazor.Components.Button>
         </FooterTemplate>
     </ModalDialog>
-</Modal>
+</BootstrapBlazor.Components.Modal>
 
 @code {
     
     private List<SelectedItem>? Roles { get; set; }
     
-    private Modal? PasswordModal { get; set; }
+    private BootstrapBlazor.Components.Modal? PasswordModal { get; set; }
     
     private UserEntity? SelectedUser { get; set; }
 

@@ -16,13 +16,11 @@
                     <BootstrapPassword name="password" PlaceHolder="密码" @bind-Value="LoginVo.Password"/>
                 </BootstrapInputGroup>
                 <div class="d-flex justify-content-between mt-3">
-                    <Checkbox @bind-Value="LoginVo.RememberMe" Color="Color.Primary" ShowAfterLabel="true" DisplayText="记住密码自动登录" />
+                    <BootstrapBlazor.Components.Checkbox @bind-Value="LoginVo.RememberMe" Color="BootstrapBlazor.Components.Color.Primary" ShowAfterLabel="true" DisplayText="记住密码自动登录" />
                 </div>
-                <Button class="btn-login mt-3" ButtonType="ButtonType.Button" Size="Size.Large" IsBlock="true" Color="Color.None" OnClick="DoLogin" Text="登 录">
-                </Button>
-                <div class="d-flex justify-content-between mt-3">
-                    <LinkButton Text="申请账号" OnClick="OnSignUp" />
-                    <LinkButton Text="忘记密码" OnClick="OnForgotPassword" />
+                <BootstrapBlazor.Components.Button class="btn-login mt-3" ButtonType="BootstrapBlazor.Components.ButtonType.Button" Size="Size.Large" IsBlock="true" Color="BootstrapBlazor.Components.Color.None" OnClick="DoLogin" Text="登 录">
+                </BootstrapBlazor.Components.Button>
+                <div class="d-flex justify-content-between mt-3">                    
                 </div>
             </div>
         </form>

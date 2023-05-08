@@ -13,7 +13,7 @@
 
 <PageTitle>BlazorLearn</PageTitle>
 
-<Layout SideWidth="0" IsPage="true" IsFullSide="true" IsFixedHeader="true" IsFixedFooter="true"
+<BootstrapBlazor.Components.Layout SideWidth="0" IsPage="true" IsFullSide="true" IsFixedHeader="true" IsFixedFooter="true"
         ShowFooter="true" ShowCollapseBar="true" OnCollapsed="@OnCollapsed" Menus="@_menuItems">
     <Header>
         <span class="ms-3 flex-sm-fill d-none d-sm-block">BlazorLearn</span>
@@ -21,7 +21,7 @@
         </div>
         <Logout ImageUrl="images/argo-c.png" DisplayName="@_user.Name" UserName="@_user.UserName">
             <LinkTemplate>
-                <LinkButton Icon="fa fa-gear" Text="修改密码" Color="Color.None" OnClick="ChangePassword"></LinkButton>
+                <LinkButton Icon="fa fa-gear" Text="修改密码" Color="BootstrapBlazor.Components.Color.None" OnClick="ChangePassword"></LinkButton>
                 <LogoutLink Url="/api/account/logout"></LogoutLink>
             </LinkTemplate>
         </Logout>
@@ -44,13 +44,13 @@
             <a href="/" target="_blank">BlazorLearn</a>
         </div>
     </Footer>
-</Layout>
+</BootstrapBlazor.Components.Layout>
 
 @code
 {
     private bool IsCollapsed { get; set; }
     
-    private List<MenuItem>? _menuItems;
+    private List<BootstrapBlazor.Components.MenuItem>? _menuItems;
 
     [NotNull]
     private UserEntity? _user;
@@ -88,14 +88,14 @@
         _menuItems = CreateMenuItems(MenuEntity.Where(x => x.Roles!.Any(y => y.Id == _user.RoleId)).ToList(), 0);
     }
 
-    private List<MenuItem> CreateMenuItems(List<MenuEntity> menus, int parentId)
+    private List<BootstrapBlazor.Components.MenuItem> CreateMenuItems(List<MenuEntity> menus, int parentId)
     {
-        var selectedMenus = new List<MenuItem>();
+        var selectedMenus = new List<BootstrapBlazor.Components.MenuItem>();
         var selectedMenuEntities = menus.Where(x => x.ParentId == parentId).ToList();
 
         foreach (var menuEntity in selectedMenuEntities)
         {
-            var menuItem = new MenuItem(menuEntity.Name!, menuEntity.Url, menuEntity.Icon);
+            var menuItem = new BootstrapBlazor.Components.MenuItem(menuEntity.Name!, menuEntity.Url, menuEntity.Icon);
             menuItem.Items = CreateMenuItems(menus, menuEntity.Id);
             selectedMenus.Add(menuItem);
         }

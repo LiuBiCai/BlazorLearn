@@ -1,7 +1,7 @@
 ﻿@page "/menu"
 @using BlazorLearn.Entity
 
-<Table TItem="MenuEntity" IsBordered="true" ShowAddButton="true" ShowToolbar="true"
+<BootstrapBlazor.Components.Table TItem="MenuEntity" IsBordered="true" ShowAddButton="true" ShowToolbar="true"
        ShowExtendButtons="true" IsTree="true" TreeNodeConverter="TreeNodeConverter"
        OnTreeExpand="OnTreeExpand" OnQueryAsync="OnQueryAsync" OnSaveAsync="OnSaveAsync">
     <TableColumns>
@@ -10,7 +10,7 @@
         <TableColumn @bind-Field="@context.Url"></TableColumn>
         <TableColumn @bind-Field="@context.ParentId" Visible="false" Lookup="Menus"></TableColumn>
     </TableColumns>
-</Table>
+</BootstrapBlazor.Components.Table>
 
 @code {
     
