@@ -1,0 +1,75 @@
+﻿@namespace BlazorLearn.Pages.Form
+@page "/order"
+@implements IDisposable
+@using BlazorLearn.Entity;
+
+<PageContainer Title="创建订单">
+    <Content>
+        <span>注意事项</span>
+    </Content>
+    <ChildContent>
+        <AntDesign.Card>
+            <AntDesign.Steps Current="@_current" Class="steps">
+                <AntDesign.Step Title="@("信息填写")" />
+                <AntDesign.Step Title="@("确认订单")" />
+                <AntDesign.Step Title="@("创建完成")" />
+            </AntDesign.Steps>
+            <CascadingValue Value="this">
+                @switch (_current) {
+                    case 0:
+                        <Step1 _model="@_model" />
+                        break;
+                    case 1:
+                        <Step2 _model="@_model" />
+                        break;
+                    case 2:
+                        <Step3 />
+                        break;
+                }
+            </CascadingValue>
+        </AntDesign.Card>
+    </ChildContent>
+</PageContainer>
+@*
+<PageContainer Title="历史订单">
+     <ChildContent>
+        <AntDesign.Card>
+            @*<AntDesign.Button OnClick="@OnRefreshTableAsync">刷新Table</AntDesign.Button>
+        <AntDesign.Table Style="margin-bottom: 16px;"
+                     DataSource="@Data"                    
+                   HidePagination>
+                <AntDesign.Column Title="创建时间" @bind-Field="@context.CreateTime" />                
+                <AntDesign.Column Title="订单信息" @bind-Field="@context.OrderInfo" />
+                <AntDesign.Column Title="EA邮箱" @bind-Field="@context.EaEmail" />
+                <AntDesign.Column Title="装货情况" @bind-Field="@context.OrderProcess" />
+                <AntDesign.Column Title="平台" @bind-Field="@context.OrderPlatform" />
+                <AntDesign.Column Title="状态" @bind-Field="@context.Status" />                
+                <AntDesign.Column Title="单价&总计" @bind-Field="@context.OrderCost" />
+                <AntDesign.Column Title="备注" @bind-Field="@context.OrderRemark" />
+                
+            </AntDesign.Table>
+        </AntDesign.Card>
+    </ChildContent>
+</PageContainer>
+*@
+<PageContainer Title="最近订单">
+<BootstrapBlazor.Components.Table TItem="OrderEntity" IsBordered="true" ShowAddButton="true" 
+                                      ShowExtendButtons="true" ShowEditButtonCallback="entity => entity.Id == 0" ShowDeleteButtonCallback="entity => entity.Id == 0"
+                                      OnQueryAsync="OnQueryAsync" OnSaveAsync="OnSaveAsync" @ref="@Table">
+    <TableColumns>
+            <TableColumn title="创建时间" @bind-Field="@context.CreateTime"> </TableColumn>
+            <TableColumn Title="订单信息" @bind-Field="@context.OrderInfo"> </TableColumn>
+            <TableColumn Title="EA邮箱" @bind-Field="@context.EaEmail"> </TableColumn>
+            <TableColumn Title="装货情况" @bind-Field="@context.OrderProcess"> </TableColumn>
+            <TableColumn Title="平台" @bind-Field="@context.OrderPlatform"> </TableColumn>
+            <TableColumn Title="状态" @bind-Field="@context.Status"> </TableColumn>
+            <TableColumn Title="单价&总计" @bind-Field="@context.OrderCost"> </TableColumn>
+            <TableColumn Title="备注" @bind-Field="@context.OrderRemark"> </TableColumn>
+           
+    </TableColumns>
+    <RowButtonTemplate>
+            <TableCellButton Color="BootstrapBlazor.Components.Color.Success" Icon="fa fa-edit" Text="修改订单" OnClick="() => ShowModal(context)"></TableCellButton>
+            <TableCellButton Color=@context.OrderRunColor Icon="fa fa-edit" Text=@context.OrderRun OnClickWithoutRender="() => ShowModal2(context)"></TableCellButton>
+    </RowButtonTemplate>
+</BootstrapBlazor.Components.Table>
+</PageContainer>

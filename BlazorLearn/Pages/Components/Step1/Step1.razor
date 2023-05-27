@@ -1,0 +1,68 @@
+﻿@namespace BlazorLearn.Pages.Form
+
+<Form LabelCol="new ColLayoutParam{ Span = 5 }"
+      WrapperCol="new ColLayoutParam{ Span = 19 }"
+      Layout="@FormLayout.Horizontal"
+      Class="stepForm"
+      Model="_model"
+     >"
+   
+    
+        <FormItem Label="订单信息">
+        <Input Placeholder="订单信息" @bind-Value="@context.OrderInfo" />
+        </FormItem>
+    
+        <FormItem Label="EA邮箱">
+        <Input Placeholder="example@qq.com" @bind-Value="@context.EaEmail" />
+        </FormItem>
+        <FormItem Label="EA密码">
+        <Input Placeholder="********" @bind-Value="@context.EaPass" />
+        </FormItem>
+        <FormItem Label="EA备份码或密保">
+        <Input Placeholder="备份码1;备份码2;备份码3" @bind-Value="@context.EaBackCode" />
+        </FormItem>
+        <FormItem Label="订单量 K">
+        <AntDesign.InputNumber Placeholder="100" @bind-Value="@context.OrderAmount" />
+        </FormItem>
+        <FormItem Label="游戏平台" >
+        <AntDesign.InputGroup Compact Style="display: table">
+            <AntDesign.Select TItem="string"
+                              TItemValue="string"
+                              DefaultValue="@("PS")"
+                              @bind-Value="@context.OrderPlatform">
+                <SelectOptions>
+                    <AntDesign.SelectOption TItem="string" TItemValue="string" Value="@("PS")" Label="PS" />
+                    <AntDesign.SelectOption TItem="string" TItemValue="string" Value="@("XBOX")" Label="XBOX" />
+                </SelectOptions>
+            </AntDesign.Select>
+        </AntDesign.InputGroup>
+        </FormItem>
+        <FormItem Label="俱乐部名">
+        <Input Placeholder="账号具有双平台时需填" @bind-Value="@context.EaClub" />
+        </FormItem>
+        <AntDesign.Line>@error</AntDesign.Line>
+    <FormItem WrapperCol="_formLayout.WrapperCol">
+        <AntDesign.Button Type="primary" OnClick="OnValidateForm">
+            填写完成
+        </AntDesign.Button>
+        <AntDesign.Button Type="primary">
+            修改订单
+        </AntDesign.Button>
+    </FormItem>
+      
+</Form>
+        @*
+        <AntDesign.Divider Style="margin: 40px 0 24px 0;" />
+
+<div class="desc">
+    <h3>Description</h3>
+    <h4>Transfer to Alipay account</h4>
+    <p>
+        If necessary, some common questions about the product can be put here.If necessary, some common questions about the product can be put here.If necessary, some common questions about the product can be put here.
+    </p>
+    <h4>Transfer To Bank Card</h4>
+    <p>
+        If necessary, some common questions about the product can be put here.If necessary, some common questions about the product can be put here.If necessary, some common questions about the product can be put here.
+    </p>
+</div>
+*@

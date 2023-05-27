@@ -27,6 +27,7 @@
 
     private void PermissionCheck(NavigationContext context)
     {
+        throw new Exception("PermissionCheck");
         var whiteList = Furion.App.Configuration["WhiteList"];
         if (whiteList != null && whiteList.Split(',').Contains(context.Path))
         {

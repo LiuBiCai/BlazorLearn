@@ -1,0 +1,54 @@
+﻿@page "/history"
+@using BlazorLearn.Entity;
+@using System.Security.Claims;
+
+
+<PageContainer Title="历史订单">
+    <ChildContent>
+        <AntDesign.Card>
+            @*<AntDesign.Button OnClick="@OnRefreshTableAsync">刷新Table</AntDesign.Button>*@
+            <AntDesign.Table Style="margin-bottom: 16px;"
+                             DataSource="@Data"
+                                      HidePagination>
+                <AntDesign.Column Title="创建时间" @bind-Field="@context.CreateTime" />
+                <AntDesign.Column Title="订单信息" @bind-Field="@context.OrderInfo" />
+                <AntDesign.Column Title="EA邮箱" @bind-Field="@context.EaEmail" />
+                <AntDesign.Column Title="装货情况" @bind-Field="@context.OrderProcess" />
+                <AntDesign.Column Title="平台" @bind-Field="@context.OrderPlatform" />
+                <AntDesign.Column Title="状态" @bind-Field="@context.Status" />
+                <AntDesign.Column Title="单价&总计" @bind-Field="@context.OrderCost" />
+                <AntDesign.Column Title="备注" @bind-Field="@context.OrderRemark" />
+            </AntDesign.Table>
+        </AntDesign.Card>
+    </ChildContent>
+</PageContainer>
+
+@code
+{
+    public OrderEntity _model = new OrderEntity();
+
+    public List<OrderEntity> Data { get; set; } = new List<OrderEntity>();
+    public async Task RefreshData()
+    {
+        try
+        {
+            var _user = UserEntity.Where(x => x.UserName == Furion.App.User.FindFirstValue(ClaimTypes.Name)).First();
+            if (_user == null)
+            {
+                return;
+            }
+
+            Data = OrderEntity.Select.Where(x => x.UserId == _user.Id).OrderByDescending(x => x.CreateTime).ToList();
+
+        }
+        catch
+        {
+            
+        }
+    }
+
+protected override async Task OnInitializedAsync()
+	{
+		await RefreshData();    
+    }
+}

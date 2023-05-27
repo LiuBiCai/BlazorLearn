@@ -8,10 +8,11 @@ public static class DbExtension
 {
     public static IServiceCollection AddDb(this IServiceCollection services)
     {
+       
         var conn = Furion.App.Configuration["Db:ConnString"];
         var freeSql = new FreeSqlBuilder()
-            .UseAutoSyncStructure(Furion.App.WebHostEnvironment.IsDevelopment())
-            .UseConnectionString(DataType.Sqlite, conn)
+            .UseAutoSyncStructure(Furion.App.WebHostEnvironment.IsDevelopment())            
+            .UseConnectionString(DataType.SqlServer, conn)
             .Build();
         
         freeSql.Aop.ConfigEntity += (s, e) =>
@@ -26,8 +27,8 @@ public static class DbExtension
             UserEntity user = new UserEntity()
             {
                 UserName = "Admin",
-                Password = MD5Encryption.Encrypt("Admin"),
-                Name = "张三"
+                Password = MD5Encryption.Encrypt("Sc147258"),
+                Name = "Jack"
             };
             user.Save();
             
@@ -66,7 +67,23 @@ public static class DbExtension
                 Sort = 30
             };
             userMenu.Save();
-
+            MenuEntity orderMenu = new MenuEntity()
+            {
+                Name = "订单管理",
+                Url = "/order",
+                Icon = "fa fa-user",
+                Sort = 30
+            };
+            orderMenu.Save();
+            MenuEntity historyMenu = new MenuEntity()
+            {
+                Name = "历史订单",
+                Url = "/history",
+                Icon = "fa fa-user",
+                Sort = 30
+            };
+            historyMenu.Save();
+            /*
             var parentTest = new MenuEntity()
             {
                 Name = "父菜单",
@@ -89,12 +106,12 @@ public static class DbExtension
                 ParentId = parentTest.Id
             };
             child2.Save();
-            
+            */
             RoleEntity role = new RoleEntity()
             {
                 Name = "管理员",
                 Users = new List<UserEntity>() { user },
-                Permissions = new List<MenuEntity>(){homeMenu, menuMenu, roleMenu, userMenu, parentTest, child1, child2}
+                Permissions = new List<MenuEntity>() { homeMenu, menuMenu, roleMenu, userMenu, orderMenu } //parentTest, child1, child2}
             };
             role.Save().SaveMany(nameof(RoleEntity.Users));
             role.SaveMany(nameof(RoleEntity.Permissions));

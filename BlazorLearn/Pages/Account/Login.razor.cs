@@ -85,7 +85,7 @@ public partial class Login
                 await MessageService.Show(new MessageOption()
                 {
                     Color = Color.Success,
-                    Content = "登录成功"
+                    Content = LoginVo.UserName +"登录成功"
                 });
                 ReturnUrl ??= "/";
                 await AjaxService.Goto(ReturnUrl);

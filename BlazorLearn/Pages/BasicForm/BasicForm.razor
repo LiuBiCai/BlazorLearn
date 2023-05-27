@@ -1,0 +1,62 @@
+﻿@namespace BlazorLearn.Pages
+@page "/Order2"
+<PageContainer Title="创建订单">    
+    <Content>
+        <span>注意事项</span>
+    </Content>
+    <ChildContent>
+        <AntDesign.Card>
+            <Form 
+                Model="@_model"
+                Style="margin-top: 8px;"
+                OnFinish="HandleSubmit">
+                
+                <FormItem Label="订单信息" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                        <Input Placeholder="订单信息" @bind-Value="@context.OrderInfo" />
+                </FormItem>                        
+                <FormItem Label="EA邮箱" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input  @bind-Value="@context.EaEmail"></Input>
+                </FormItem>
+                <FormItem Label="EA密码" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input  @bind-Value="@context.EaPass"></Input>
+                </FormItem>
+               
+                <FormItem Label="EA备份码" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input  @bind-Value="@context.EaBackCode"></Input>
+                </FormItem>
+                <FormItem Label="订单量 K" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <Input   @bind-Value="@context.OrderAmount"></Input>
+                </FormItem>
+                
+                <FormItem Label="游戏平台" LabelCol="_formItemLayout.LabelCol" WrapperCol="_formItemLayout.WrapperCol">
+                    <InputGroup Compact Style="display: table">                        
+                      <AntDesign.Select 
+                      TItem="string" 
+                      TItemValue="string" 
+                      DefaultValue="@("PS")" 
+                     
+                      @bind-Value="@context.OrderPlatform">
+                      <SelectOptions>
+                        <AntDesign.SelectOption TItem="string" TItemValue="string" Value="@("PS")" Label="PS" />
+                        <AntDesign.SelectOption TItem="string" TItemValue="string" Value="@("XBOX")" Label="XBOX" />
+                        </SelectOptions>
+                      </AntDesign.Select>   
+                    </InputGroup>
+                </FormItem>
+                       
+                <FormItem Label=" " Style="margin-top:32px" WrapperCol="_submitFormLayout.WrapperCol">
+                    <AntDesign.Button Type="primary" HtmlType="submit">
+                        创建订单
+                    </AntDesign.Button>                    
+                </FormItem>
+            </Form>
+        </AntDesign.Card>
+    </ChildContent>
+</PageContainer>
+
+
+
+    
+
+
+

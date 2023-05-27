@@ -10,27 +10,27 @@
 @inject ToastService ToastService
 @implements IDisposable
 @inject IDispatchService<string> DispatchService
+@attribute [Authorize]
 
 <PageTitle>BlazorLearn</PageTitle>
 
 <BootstrapBlazor.Components.Layout SideWidth="0" IsPage="true" IsFullSide="true" IsFixedHeader="true" IsFixedFooter="true"
-        ShowFooter="true" ShowCollapseBar="true" OnCollapsed="@OnCollapsed" Menus="@_menuItems">
+         ShowCollapseBar="true" OnCollapsed="@OnCollapsed" Menus="@_menuItems">
     <Header>
-        <span class="ms-3 flex-sm-fill d-none d-sm-block">BlazorLearn</span>
+        <span class="ms-3 flex-sm-fill d-none d-sm-block">FIFA 23</span>
         <div class="flex-fill d-sm-none">
         </div>
-        <Logout ImageUrl="images/argo-c.png" DisplayName="@_user.Name" UserName="@_user.UserName">
-            <LinkTemplate>
-                <LinkButton Icon="fa fa-gear" Text="修改密码" Color="BootstrapBlazor.Components.Color.None" OnClick="ChangePassword"></LinkButton>
+        <Logout ImageUrl="/images/fifa-23-for-free.jpg" DisplayName="@_user.Name" UserName="@_user.UserName">
+            <LinkTemplate>               
                 <LogoutLink Url="/api/account/logout"></LogoutLink>
             </LinkTemplate>
         </Logout>
     </Header>
     <Side>
         <div class="layout-banner">
-            <img class="layout-logo" src="images/Argo.png" />
+            <img class="layout-logo" src="/images/fifa-23-for-free.jpg" />
             <div class="layout-title">
-                <span>BlazorLearn</span>
+                <span>FIFA 23</span>
             </div>
         </div>
     </Side>
@@ -39,38 +39,49 @@
             @Body
         </CascadingValue>
     </Main>
-    <Footer>
-        <div class="text-center flex-fill">
-            <a href="/" target="_blank">BlazorLearn</a>
-        </div>
-    </Footer>
+   
 </BootstrapBlazor.Components.Layout>
 
 @code
 {
     private bool IsCollapsed { get; set; }
-    
+
     private List<BootstrapBlazor.Components.MenuItem>? _menuItems;
 
     [NotNull]
-    private UserEntity? _user;
-    
+    private UserEntity? _user ;
+
     private Task OnCollapsed(bool collapsed)
     {
         IsCollapsed = collapsed;
         return Task.CompletedTask;
     }
-    
+
     protected override void OnInitialized()
     {
+        System.Diagnostics.Debug.WriteLine("运行1次");
         base.OnInitialized();
+        
+        /*
+        if(App.HttpContext==null)
+        {
+           // throw new Exception("HttpContext");
+        }
+        if(App.User==null)
+        {
+            throw new Exception("用户不存在");
+
+        }
+        */
         _user = UserEntity.Where(x => x.UserName == App.User.FindFirstValue(ClaimTypes.Name)).First();
         if (_user == null)
         {
             return;
         }
+
         RefreshMenu();
         DispatchService.Subscribe(Notify);
+
     }
     
     private Task Notify(DispatchEntry<string> arg)

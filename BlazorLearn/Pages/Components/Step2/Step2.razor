@@ -1,0 +1,30 @@
+﻿@namespace BlazorLearn.Pages.Form
+
+<Form LabelCol="new ColLayoutParam{ Span = 5 }"
+      WrapperCol="new ColLayoutParam{ Span = 19 }"
+      Layout="@FormLayout.Horizontal"
+      Class="stepForm"
+      Model="@_model">
+    <AntDesign.Alert Closable
+           ShowIcon="true"
+           Message="注意事项"
+           Style="margin-bottom: 24px;" />
+    <Descriptions Column="@(1)">
+        <DescriptionsItem Title="订单信息">@_model.OrderInfo</DescriptionsItem>
+        <DescriptionsItem Title="订单量 K">@_model.OrderAmount</DescriptionsItem>        
+        <DescriptionsItem Title="订单总价">
+            <Statistic Value="@_model.OrderAmountYuan" Suffix="￥" />
+        </DescriptionsItem>
+    </Descriptions>
+    <AntDesign.Divider Style="margin: 24px 0" />
+    
+    @*
+    <FormItem Label="Password">
+        <Input Type="password" Style="width: 80%" @bind-Value="@context.Password" />
+    </FormItem>
+    *@
+    <FormItem Style="margin-bottom: 8px;" WrapperCol="_formLayout.WrapperCol">
+        <AntDesign.Button Type="primary" OnClick="OnValidateForm">确认订单</AntDesign.Button>
+        <AntDesign.Button OnClick="Preview" Style="margin-left: 8px;">上一步</AntDesign.Button>
+    </FormItem>
+</Form>

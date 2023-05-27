@@ -1,9 +1,8 @@
 ﻿@page "/"
+@using BlazorLearn.Entity;
 @attribute [Authorize]
+@using System.Security.Claims;
 
-<PageTitle>Index</PageTitle>
-<AntDesign.Button Type="primary">Ant Design Button</AntDesign.Button>
-<h1>Hello, world!</h1>
  <AntDesign.Row Type="flex" Gutter="24">
    <AntDesign.Col Xs="24" Sm="12" Md="12" Lg="12" Xl="6" Style="margin-bottom: 24px;">
        
@@ -19,7 +18,7 @@
     <ChartCard Title="进行中的订单"
                Total="@inOrder"
                ContentHeight="46"
-                   Avatar="https://img.zcool.cn/community/0174da58ecedcda8012049ef732d92.jpg@1280w_1l_2o_100sh.jpg">
+                   Avatar="/images/loading.jpg">
 
     </ChartCard>
 </AntDesign.Col>
@@ -28,7 +27,7 @@
     <ChartCard Title="已完成订单"
                Total="@finishOrder"
                ContentHeight="46"
-                   Avatar="https://pic4.zhimg.com/v2-b23251ff3666acbd69bf8e81d69f883f_r.jpg">
+                   Avatar="/images/finished.jpg">
 
     </ChartCard>
 </AntDesign.Col>
@@ -46,18 +45,26 @@
 
 @code
 {
-	private string debt = "0";
+    private string debt = "0";
     private string inOrder = "0";
     private string finishOrder = "0";
     private string price = "0";
 
-	protected override async Task OnInitializedAsync()
-	{
-		//debt = await Http.GetStringAsync("https://localhost:44384/api/Debt");
-        debt = "￥" + "100";
-        inOrder ="0";
-        finishOrder ="0";
-        price = "￥" + "100";
+    protected override async Task OnInitializedAsync()
+    {
+        var _user = UserEntity.Where(x => x.UserName == Furion.App.User.FindFirstValue(ClaimTypes.Name)).First();
+        if (_user == null)
+        {
+            return;
+        }
+        var Data = OrderEntity.Select.Where(x => x.UserId == _user.Id).ToList();
+        //Data = OrderEntity.Select.Where(x => x.UserId == _user.Id).OrderByDescending(x => x.CreateTime).ToList();
+
+        //debt = await Http.GetStringAsync("https://localhost:44384/api/Debt");
+        debt = "￥"+Data.Where(x => x.Status == OrderStatus.已完成).Sum(x => x.OrderAmountYuan);
+        inOrder =Data.Where(x=>x.Status==OrderStatus.正在发货).Count().ToString();
+        finishOrder = Data.Where(x => x.Status == OrderStatus.已完成).Count().ToString();
+        price = "￥" + _user.price+"/W";
 	}
 
    

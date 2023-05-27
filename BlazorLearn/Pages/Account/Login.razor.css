@@ -9,19 +9,26 @@
 @media (min-width: 768px) {
     .wrap {
         background-color: #5bc0de;
-        background: url('/images/bg2.jpg') fixed no-repeat;
+        background: url('/images/bg3.png') fixed no-repeat;
         background-size: 100% 100%;
     }
 
     .container {
-        background: url('/images/bg3.png') no-repeat;
+        
         background-size: contain;
         width: 704px;
         height: 404px;
         margin: 0 auto;
         margin-top: calc(100vh / 2 - 190px);
+        
+       
     }
 }
+
+.form-signin {
+    background: url('/images/bg3.jpg') fixed no-repeat;
+}
+
 
 .form-signin-heading {
     margin: 0;

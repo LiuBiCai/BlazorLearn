@@ -1,0 +1,25 @@
+﻿@namespace BlazorLearn.Pages.Form
+
+<Result Status="success"
+        Title="@("创建成功!")"
+        Class="result">
+    <Extra>
+        <AntDesign.Button Type="primary" OnClick="OnFinish">
+            再下一单
+        </AntDesign.Button>
+        @*<AntDesign.Button>View Bill</AntDesign.Button>*@
+    </Extra>
+    @*
+    <ChildContent>
+        <div class="information">
+            <Descriptions Column="1">
+                <DescriptionsItem Title="订单信息">@_model.OrderInfo</DescriptionsItem>
+                <DescriptionsItem Title="订单量 K">@_model.OrderAmount</DescriptionsItem>
+                <DescriptionsItem Title="订单总价">
+                    <Statistic Value="@_model.OrderAmountYuan" Suffix="￥" />
+                </DescriptionsItem>
+            </Descriptions>
+        </div>
+    </ChildContent>
+*@
+</Result>

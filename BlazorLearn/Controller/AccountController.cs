@@ -27,6 +27,7 @@ public class AccountController: IDynamicApiController
         var password = MD5Encryption.Encrypt(loginVo.Password);
         var user = await UserEntity.Where(x =>
             x.UserName == loginVo.UserName && x.Password == password).Include(x => x.Role).FirstAsync();
+        
         if (user != null)
         {
             var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
