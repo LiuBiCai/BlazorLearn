@@ -4,6 +4,8 @@ using BlazorLearn.Models;
 using BootstrapBlazor.Components;
 using Furion.DataEncryption;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using System;
 using System.Security.Claims;
 using System.Xml.Linq;
 
@@ -12,8 +14,11 @@ namespace BlazorLearn.Pages.Form
   
     public partial class StepForm
     {
-       
-      
+
+
+        private Modal? ProofModal { get; set; }
+        private string proof1 { get; set; }
+        private string proof2 { get; set; }
 
         private Task<QueryData<OrderEntity>> OnQueryAsync(QueryPageOptions arg)
         {
@@ -24,7 +29,7 @@ namespace BlazorLearn.Pages.Form
                 {
                     return null;
                 }
-                var orders = OrderEntity.Select.Where(x => x.UserId == _user.Id).OrderByDescending(x => x.CreateTime).Count(out var count)
+                var orders = OrderEntity.Select.Where(x => x.UserId == _user.Id&&x.CreateTime>DateTime.Now.AddHours(-24)&&x.Status!=OrderStatus.修改前).OrderByDescending(x => x.CreateTime).Count(out var count)
                     .Page(arg.PageIndex, arg.PageItems).ToList();
                 foreach(var order in orders)
                 {
@@ -101,6 +106,27 @@ namespace BlazorLearn.Pages.Form
             StateHasChanged();
             return Task.CompletedTask;
         }
+        private Task GetProof(OrderEntity orderEntity)
+        {
+            ProofModal.IsBackdrop = true;
+
+            var proof=OrderProofEntity.Where(x => x.OrderNo == orderEntity.OrderNo).First();
+            System.Console.WriteLine(proof.OrderProof1.Length + "," + proof.OrderProof2.Length);
+            if (proof!=null)
+            {
+                proof1 = "data:image/png;base64," + proof.OrderProof1;
+                proof2 = "data:image/png;base64," + proof.OrderProof2;
+                
+                ProofModal.Show();
+            }
+            
+            return Task.CompletedTask;
+        }
+
+     
+
+
+
         private int _current;
         public OrderEntity _model = new OrderEntity();
         public void Refresh()

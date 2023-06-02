@@ -83,6 +83,7 @@ public static class DbExtension
                 Sort = 30
             };
             historyMenu.Save();
+
             /*
             var parentTest = new MenuEntity()
             {

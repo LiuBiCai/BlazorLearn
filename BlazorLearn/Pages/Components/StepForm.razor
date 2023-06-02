@@ -3,6 +3,7 @@
 @implements IDisposable
 @using BlazorLearn.Entity;
 
+
 <PageContainer Title="创建订单">
     <Content>
         <span>注意事项</span>
@@ -70,6 +71,25 @@
     <RowButtonTemplate>
             <TableCellButton Color="BootstrapBlazor.Components.Color.Success" Icon="fa fa-edit" Text="修改订单" OnClick="() => ShowModal(context)"></TableCellButton>
             <TableCellButton Color=@context.OrderRunColor Icon="fa fa-edit" Text=@context.OrderRun OnClickWithoutRender="() => ShowModal2(context)"></TableCellButton>
+            <TableCellButton Color=BootstrapBlazor.Components.Color.Info Icon="fa fa-edit" Text="获取凭证" OnClick="() => GetProof(context)"></TableCellButton>
     </RowButtonTemplate>
 </BootstrapBlazor.Components.Table>
 </PageContainer>
+
+<BootstrapBlazor.Components.Modal @ref="ProofModal">
+    <ModalDialog Title="截图">
+        <BodyTemplate>
+            <Image Src=@proof1 ></Image>
+            <Image Src=@proof2 ></Image>
+        </BodyTemplate>
+      
+    </ModalDialog>
+</BootstrapBlazor.Components.Modal>
+
+@code
+{
+    
+
+    private string? pass= "";
+
+}

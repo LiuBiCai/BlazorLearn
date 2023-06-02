@@ -1,4 +1,7 @@
 ﻿using System.ComponentModel;
+using System.Data;
+using AntDesign;
+using BlazorLearn.Pages.Admin;
 using BootstrapBlazor.Components;
 using FreeSql;
 using FreeSql.DataAnnotations;
@@ -41,13 +44,13 @@ public class OrderEntity : BaseEntity<OrderEntity, int>
     [Description("订单总量(K)")]
     public int OrderAmount { get; set; }
     [Description("订单金额(元)")]
-    public int OrderAmountYuan { get; set; }
+    public double OrderAmountYuan { get; set; }
     [Description("订单平台")]
     public string OrderPlatform { get; set; }
     [Description("订单备注")]
     public string OrderRemark { get; set; }
     [Description("单价")]
-    public int OrderPrice { get; set; } = 1;
+    public double OrderPrice { get; set; } = 1;
     [Description("单价总价")]
     public string OrderCost { get; set; }
     [Description("装货进度")]
@@ -56,7 +59,12 @@ public class OrderEntity : BaseEntity<OrderEntity, int>
     [Description("运行")]
     public string OrderRun { get; set; } = "暂停";
     [Description("运行颜色")]
-    public Color OrderRunColor { get; set; }=Color.Warning;
+    public BootstrapBlazor.Components.Color OrderRunColor { get; set; }= BootstrapBlazor.Components.Color.Warning;
+
+    [Description("修改前订单ID")]
+    public int OrderIdBefore { get; set; }
+
+  
 
 }
 
@@ -82,6 +90,15 @@ public enum OrderStatus
     暂停,
     [Description("恢复运行")]
     恢复,
+    [Description("修改前")]
+    修改前,
+    [Description("等待修改")]
+    等待修改,
+    [Description("修改失败")]
+    修改失败,
+    [Description("订单超时")]
+    订单超时,
+
 }
 
 public class OrderDetailEntity

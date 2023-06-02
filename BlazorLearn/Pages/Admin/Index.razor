@@ -61,7 +61,7 @@
         //Data = OrderEntity.Select.Where(x => x.UserId == _user.Id).OrderByDescending(x => x.CreateTime).ToList();
 
         //debt = await Http.GetStringAsync("https://localhost:44384/api/Debt");
-        debt = "￥"+Data.Where(x => x.Status == OrderStatus.已完成).Sum(x => x.OrderAmountYuan);
+        debt = "￥"+(Data.Where(x => x.Status == OrderStatus.已完成).Sum(x => x.OrderAmountYuan)-_user.payed);
         inOrder =Data.Where(x=>x.Status==OrderStatus.正在发货).Count().ToString();
         finishOrder = Data.Where(x => x.Status == OrderStatus.已完成).Count().ToString();
         price = "￥" + _user.price+"/W";

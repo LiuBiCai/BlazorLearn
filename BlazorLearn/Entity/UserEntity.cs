@@ -27,10 +27,14 @@ public class UserEntity : BaseEntity<UserEntity, int>
     public RoleEntity? Role { get; set; }
 
     [Description("价格")]
-    public int price { get; set; }
-
+    public double price { get; set; }
+    [Description("待付款")]
+    public double waitPay { get; set; } 
     [Description("已支付")]
-    public int payed { get; set; }
+    public double payed { get; set; }
+    [Description("最后支付")]
+    public double paidLast { get; set; }
+    
 
 
 

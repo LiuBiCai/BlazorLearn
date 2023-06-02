@@ -10,6 +10,9 @@
         <TableColumn @bind-Field="@context.UserName"></TableColumn>
         <TableColumn @bind-Field="@context.Name"></TableColumn>
         <TableColumn @bind-Field="@context.RoleId" Lookup="Roles"></TableColumn>
+        <TableColumn @bind-Field="@context.payed"></TableColumn>
+        <TableColumn @bind-Field="@context.paidLast"></TableColumn>
+        <TableColumn @bind-Field="@context.waitPay"></TableColumn>
     </TableColumns>
     <RowButtonTemplate>
         <TableCellButton Color="BootstrapBlazor.Components.Color.Success" Icon="fa fa-edit" Text="重置密码" OnClickWithoutRender="() => ShowModal(context)"></TableCellButton>
@@ -28,11 +31,11 @@
 </BootstrapBlazor.Components.Modal>
 
 @code {
-    
+
     private List<SelectedItem>? Roles { get; set; }
-    
+
     private BootstrapBlazor.Components.Modal? PasswordModal { get; set; }
-    
+
     private UserEntity? SelectedUser { get; set; }
 
     protected override void OnInitialized()
@@ -46,6 +49,14 @@
     {
         var users = UserEntity.Select.Count(out var count)
             .Page(arg.PageIndex, arg.PageItems).ToList();
+
+        foreach(var user in users)
+        {
+            var Data = OrderEntity.Select.Where(x => x.UserId == user.Id).ToList();
+            user.waitPay=Data.Where(x => x.Status == OrderStatus.已完成).Sum(x => x.OrderAmountYuan)-user.payed;
+        }
+
+
         return Task.FromResult(new QueryData<UserEntity>()
         {
             Items = users,
@@ -55,11 +66,28 @@
 
     private Task<bool> OnSaveAsync(UserEntity arg1, ItemChangedType arg2)
     {
+        var user = UserEntity.Where(x => x.UserName == arg1.UserName).First();
         if (arg2 == ItemChangedType.Add)
         {
             arg1.Password = MD5Encryption.Encrypt(arg1.UserName);
+            arg1.Save();
+            return Task.FromResult<bool>(true);
         }
-        arg1.Save();
+        else if(arg2==ItemChangedType.Update)
+        {
+
+            PayLogEnity payLogEnity = new PayLogEnity();
+            payLogEnity.UserName = arg1.UserName;
+            payLogEnity.coin = arg1.paidLast;
+            user.paidLast = arg1.paidLast;
+            user.payed += user.paidLast;
+            user.waitPay -= user.paidLast;
+            payLogEnity.Save();
+            //arg1.pays = new List<PayLogEnity>() { payLogEnity };
+            //arg1.SaveMany(nameof(UserEntity.pays));
+        }       
+        
+        user.Update();
         return Task.FromResult<bool>(true);
     }
 
